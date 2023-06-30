@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <style>
+      .product-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .product {
+        width: 200px;
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        text-align: center;
+      }
+
+      .product img {
+        width: 150px;
+        height: 150px;
+      }
+
+      .product-card {
+        border: 1px solid white;
+        text-align: center;
+        padding: 2%;
+      }
+
+      .cart-button {
+        display: block;
+        margin-top: 10px;
+      }
+
+      .checkout-button {
+        display: block;
+        margin-top: 20px;
+      }
+
+      .add-to-cart-button {
+        background-color: #9fef00;
+        color: #1e2633;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        display: block;
+        margin: 0 auto;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center; color: white">Welcome, <%= username %>!</h1>
+
+    <br />
+
+    <h1 style="text-align: center; color: white">Our Products</h1>
+
+    <!-- Add the product cards here -->
+    <div class="product-container">
+      <% for (let product of products) { %>
+      <div class="product-card">
+        <img
+          class="product-images"
+          src="<%= product.image %>"
+          alt="<%= product.name %>"
+          class="product-image"
+        />
+        <h3 style="color: white"><%= product.name %></h3>
+        <p style="color: white">$ <%= product.price %></p>
+        <form method="POST" action="/add-to-cart">
+          <input type="hidden" name="productId" value="<%= product.id %>" />
+          <button class="add-to-cart-button" type="submit">Add to Cart</button>
+        </form>
+      </div>
+      <% } %>
+    </div>
+
+    <br />
+
+    <!-- Clear Cart Button -->
+    <form method="POST" action="/clear-cart">
+      <input class="styled-button" type="submit" value="Clear Cart" />
+    </form>
+    <br />
+
+    <!-- Checkout and Logout Buttons -->
+    <div class="button-container">
+      <form method="GET" action="/checkout">
+        <input class="styled-button" type="submit" value="Checkout" />
+      </form>
+      <br />
+
+      <form method="POST" action="/logout">
+        <input class="logout-button" type="submit" value="Log out" />
+      </form>
+      <br />
+      <br />
+    </div>
+  </body>
+</html>

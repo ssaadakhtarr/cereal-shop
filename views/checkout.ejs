@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <style>
+      .cart-table {
+        border-collapse: collapse;
+        margin: 0 auto;
+      }
+
+      .cart-table th,
+      .cart-table td {
+        border: 1px solid white;
+        padding: 8px;
+      }
+
+      .total-price {
+        text-align: center;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center; color: white">Checkout</h1>
+    <br />
+    <% if (Object.keys(cartItems).length === 0) { %>
+    <p style="text-align: center; color: white">Your cart is empty.</p>
+    <% } else { %>
+    <div class="cart-container">
+      <table class="cart-table">
+        <thead style="color: white">
+          <tr>
+            <th>Products</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% let totalPrice = 0; %> <% try { %> <%
+          Object.values(cartItems).forEach(item => { %> <% totalPrice +=
+          item.price; %>
+          <tr style="color: white">
+            <td><%= item.name %></td>
+            <td>$<%= item.price %></td>
+          </tr>
+          <% }) %> <% } catch (err) { %>
+          <tr style="color: white">
+            <td colspan="2">Error retrieving cart items</td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+      <br />
+      <div class="total-price">
+        <h4>Total Price: $<%= totalPrice.toFixed(2) %></h4>
+      </div>
+      <br />
+    </div>
+
+    <form method="POST" action="/buy">
+      <input class="styled-button" type="submit" value="Buy" />
+    </form>
+    <% } %>
+
+    <br />
+    <form method="GET" action="/dashboard">
+      <input class="styled-button" type="submit" value="Back to Dashboard" />
+    </form>
+    <br />
+    <form method="POST" action="/logout">
+      <input class="logout-button" type="submit" value="Log out" />
+    </form>
+
+    <br />
+  </body>
+</html>
